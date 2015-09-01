@@ -1,29 +1,82 @@
-#class GuessingGame
-#attr_accessor :number  # => nil
 
 
-  def rand_number
-    number = Random.new  # => #<Random:0x007fc46b17aed0>
-    number = rand(100)   # => 90
-    number               # => 90
+
+
+
+class Game
+
+
+
+def initialize
+  @turns = []               # => []
+  @rand_number = rand(100)  # => 21
+end
+
+
+def input
+  puts "Guess a number between 0-100 please.  >"                # => nil
+  @guess = gets.chomp.to_i                                      # ~> NoMethodError: undefined method `chomp' for nil:NilClass
+  while @turns.include?(@guess)
+    puts "Didn't we try that one already? Hmmmm Pick again.  >"
+    @guess = gets.chomp.to_i
   end
-  puts rand_number       # => nil
-  # def guesses
+  @turns << @guess
+end
 
-  # end
+def check
+  if @rand_number > @guess
+      puts "your guess is too low"
+    elsif @rand_number < @guess
+      puts "your guess is too high"
+    elsif @rand_number == @guess
+      puts "Congratulations you guessed it.  That was really fucking hard!"
+    end
+end
 
-  # def user_input
-  #   puts "Guess a number between 0 and 100.  >"
-  #   input = gets.chomp
-  # end
+def begin
+  while @turns.length < 5 do                                     # => true
+    input
+    check
+  end
+  puts "You wern't even close. Nice try it was #{@rand_number}"
+end
 
-  # def game
-  #   IF rand_number > user_input
-  #   puts "guess is to high"
-  # end
 
+end
+
+
+
+
+game = Game.new  # => #<Game:0x007fd04c0b8438 @turns=[], @rand_number=21>
+game.begin
+# def rand_number
+#   rand(100)      # => 8, 28
+# end
+
+
+
+# puts "number is #{rand_number}"  # => nil
+
+# rand_number  # => 28
+
+
+
+# def guess
+#   if @rand_number = input
+#     puts "You got it right"
+#     elsif @rand_number > input
+#       puts "your guess is too low"
+#     elsif @rand_number < input
+#       puts "your guess is too high"
+#   end
 #end
 
 
+# >> Guess a number between 0-100 please.  >
 
-# >> 90
+# ~> NoMethodError
+# ~> undefined method `chomp' for nil:NilClass
+# ~>
+# ~> /Users/chris/theironyard/week2/day2/numberguess/lib/guessing_game.rb:18:in `input'
+# ~> /Users/chris/theironyard/week2/day2/numberguess/lib/guessing_game.rb:38:in `begin'
+# ~> /Users/chris/theironyard/week2/day2/numberguess/lib/guessing_game.rb:51:in `<main>'
